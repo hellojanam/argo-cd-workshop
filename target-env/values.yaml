@@ -1,0 +1,11 @@
+## configuration
+ShortName: footballrivals
+beta: false
+targetRevision: main
+
+## this will configure how app syncs
+autosync: true
+syncOptions:
+  # {}
+  prune: true
+  selfHeal: true

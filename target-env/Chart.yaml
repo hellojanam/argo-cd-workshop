@@ -1,0 +1,9 @@
+apiVersion: v2
+name: app
+description: Chart for managing applications
+type: application
+version: 2.3.0
+appVersion: "1.0.0"
+maintainers:
+  - name: Janam Khatiwada
+    email: janam@cloudhero.io
