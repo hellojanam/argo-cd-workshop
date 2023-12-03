@@ -9,6 +9,6 @@ entries:
     name: argo-cd-workshop
     type: application
     urls:
-    - https://github.com/hellojanam/argo-cd-workshop.git/argo-cd-workshop-0.1.0.tgz
+    -  https://hellojanam.github.io/argo-cd-workshop/argo-cd-workshop-0.1.0.tgz
     version: 0.1.0
 generated: "2023-12-03T15:55:51.854993+05:45"
