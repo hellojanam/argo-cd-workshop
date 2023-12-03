@@ -9,9 +9,9 @@ spec:
 
   # Source of the application manifests
   source:
-    repoURL: https://github.com/infra.git
+    repoURL: https://github.com/hellojanam/argo-cd-workshop.git
     targetRevision: HEAD
-    path: kubernetes/argo-cd/application-chart
+    path: target-env/
     helm:
       releaseName: appscontroller            
 
