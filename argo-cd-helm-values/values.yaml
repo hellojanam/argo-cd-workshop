@@ -1,0 +1,56 @@
+redis-ha:
+  enabled: true
+
+controller:
+  replicas: 1
+
+server:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+
+repoServer:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+
+applicationSet:
+  replicaCount: 2
+  
+## Argo Configs
+configs:
+  # General Argo CD configuration
+  ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
+  cm:
+    # -- Create the argocd-cm configmap for [declarative setup]
+    create: true
+
+    # -- Annotations to be added to argocd-cm configmap
+    annotations: {}
+
+    # -- Argo CD's externally facing base URL (optional). Required when configuring SSO
+    url: ""
+
+    # -- The name of tracking label used by Argo CD for resource pruning
+    # @default -- Defaults to app.kubernetes.io/instance
+    application.instanceLabelKey: argocd.argoproj.io/instance
+
+    # -- Enable logs RBAC enforcement
+    ## Ref: https://argo-cd.readthedocs.io/en/latest/operator-manual/upgrading/2.3-2.4/#enable-logs-rbac-enforcement
+    server.rbac.log.enforce.enable: false
+
+    # -- Enable exec feature in Argo UI
+    ## Ref: https://argo-cd.readthedocs.io/en/latest/operator-manual/rbac/#exec-resource
+    exec.enabled: false
+
+    # -- Enable local admin user
+    ## Ref: https://argo-cd.readthedocs.io/en/latest/faq/#how-to-disable-admin-user
+    admin.enabled: true
+
+    # -- Timeout to discover if a new manifests version got published to the repository
+    timeout.reconciliation: 5s
+
+    # -- Timeout to refresh application data as well as target manifests cache
+    timeout.hard.reconciliation: 0s
+  # Argo CD configuration parameters
+  ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cmd-params-cm.yaml
