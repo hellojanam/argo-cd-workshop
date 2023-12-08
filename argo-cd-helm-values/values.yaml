@@ -7,15 +7,15 @@ controller:
 server:
   autoscaling:
     enabled: true
-    minReplicas: 2
+    minReplicas: 1
 
 repoServer:
   autoscaling:
     enabled: true
-    minReplicas: 2
+    minReplicas: 1
 
 applicationSet:
-  replicaCount: 2
+  replicaCount: 1
   
 ## Argo Configs
 configs:
