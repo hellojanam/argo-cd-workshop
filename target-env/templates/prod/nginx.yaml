@@ -1,0 +1,57 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nginx-prod
+  # You'll usually want to add your resources to the argocd namespace.
+  namespace: argo-cd
+  # Add a this finalizer ONLY if you want these to cascade delete.
+  annotations:
+    #notifications.argoproj.io/subscribe.on-sync-failed.slack: ghg-cloudhero-alerts
+    #notifications.argoproj.io/subscribe.on-health-degraded.slack: ghg-cloudhero-alerts
+
+spec:
+  # The project the application belongs to.
+  project: default
+  revisionHistoryLimit: 2
+
+  # Source of the application manifests
+  source:
+    repoURL:  https://github.com/hellojanam/argo-cd-workshop.git
+    targetRevision: {{ .Values.targetRevision }}
+    path: kubernetes-values-sample/prod/
+    helm:
+      version: v3
+      releaseName: nginx-prod
+      valueFiles:
+      - values.yaml          
+
+    # # directory
+    # directory:
+    #   recurse: false
+  # Destination cluster and namespace to deploy the application
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: prod
+
+  # Sync policy
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - PruneLast=true
+    retry:
+      limit: 2
+      backoff:
+        duration: 5s
+        factor: 2
+        maxDuration: 2m0s  
+  # syncPolicy:
+  #   syncOptions:
+  #   - CreateNamespace=true
+  #   automated: # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+  #     prune: true # Specifies if resources should be pruned during auto-syncing ( false by default ).
+  #     selfHeal: false # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+  #     allowEmpty: false # Allows deleting all application resources during automatic syncing ( false by default ).
+  
